@@ -154,7 +154,7 @@ class ImageDownloadHelper(threading.Thread):
                     raise NoDataException("No data")
                 if (img_data[0:9].decode("utf-8", "replace").lower() == "<!doctype"):
                     raise NotAnImageException("not an image")
-                if (img_data[0:7].decode("utf-8", "replace").lower() == "<html>"):
+                if (img_data[0:6].decode("utf-8", "replace").lower() == "<html>"):
                     raise NotAnImageException("not an image")
                 if (len(img_data) == 2051):
                     raise NoDataException("Flickr 'this image is no longer available' image")

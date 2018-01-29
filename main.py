@@ -28,7 +28,7 @@ if __name__ == "__main__":
     prefix_parser = PrefixParser("imagenet_fall11_urls/person.txt")
     prefix_parser.parse()
     matcher = lambda s: matches(prefix_parser, s)
-    count = 1000
+    count = 300
 
     downloader = ImageDownloader(dest_path, downloaded_map_path)
     matching_urls = get_matching_urls(urls_path, matcher, count * 2)
