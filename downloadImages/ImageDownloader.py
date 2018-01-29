@@ -152,10 +152,18 @@ class ImageDownloadHelper(threading.Thread):
                     raise NoDataException(f"status code {request.status_code}")
                 if (len(img_data) < 10):
                     raise NoDataException("No data")
+                if (img_data[0:9].decode("utf-8", "replace").lower() == "<!doctype"):
+                    raise NotAnImageException("not an image")
+                if (img_data[0:7].decode("utf-8", "replace").lower() == "<html>"):
+                    raise NotAnImageException("not an image")
                 if (len(img_data) == 2051):
                     raise NoDataException("Flickr 'this image is no longer available' image")
-                if (img_data[0:9].decode("utf-8", "replace") == "<!DOCTYPE"):
-                    raise NotAnImageException("not an image")
+                if (len(img_data) == 7211):
+                    raise NoDataException("Photobucket 'please update your account to enable 3rd party hosting' image")
+                if (len(img_data) == 3654):
+                    raise NoDataException("HudeDomains.com advertisement image")
+                if (len(img_data) == 29873):
+                    raise NoDataException("'this image has been removed' image")
                 if not self.parent_thread.is_alive():
                     return
                 self.image_downloader.dl_completed(self, img_data)
